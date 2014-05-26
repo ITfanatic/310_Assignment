@@ -5,44 +5,163 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-   
+    <style type="text/css">
+        body {
+            width: 100%;
+        }
 
-    <asp:ContentPlaceHolder id="head" runat="server">
+        #content {
+            background-color: #ffffff;
+            text-align: center;
+            height: 1000px;
+            width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #contentContainer {
+            padding-top: 100px;
+        }
+
+        #header {
+            background-image: url('images/header.jpg');
+            text-align: center;
+            height: 100px;
+            width: 101%;
+            min-width: 1015px;
+            margin-top: -30px;
+            margin-left: -10px;
+            border-bottom: 2px solid #00bfff;
+        }
+
+        li {
+            display: inline-block;
+            font-family: myriad pro;
+            border: 2px solid lightblue;
+            border-bottom-left-radius: 5px;
+            padding: 10px;
+            background-color: lightgrey;
+            width: 115px;
+        }
+
+        #name {
+            position: relative;
+            top: 25px;
+        }
+
+        .menuButton:link {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .menuButton:visited {
+            color: #000000;
+        }
+
+        .menuButton:hover {
+            color: #808080;
+        }
+
+        .menuItem {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .standardText {
+            font-family: 'Myriad Pro';
+            font-size: medium;
+            color: #808080;
+        }
+
+        .standardButton {
+            border-style: outset;
+            border-width: 3px;
+            font-family: 'Myriad Pro';
+            font-size: medium;
+            color: #808080;
+        }
+
+        #logoutButton {
+            display: block;
+            margin-top: -115px;
+            margin-left: 1000px;
+        }
+
+        .standardHeader {
+            padding-top: 20px;
+            font-family: 'Myriad Pro';
+            font-size: x-large;
+            color: #808080;
+        }
+
+        #StandardContentField {
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid lightgrey;
+            border-radius: 5px;
+            padding: 50px;
+            background-color: #fffafa;
+        }
+    </style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-    </head>
-<body  background="images/Websitedesign.png" >
-      <form id="form1" runat="server">
-      <center>
-    <h1>
-        <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" 
-            Text="*Student Financial Support System*" 
-            style="font-family: 'Arno Pro SmText'"></asp:Label>  
-     </h1>
-     </center>
-     <p style="text-align: right; margin-right: 80px;">
-      <asp:Button ID="btnLogout" runat="server" onclick="btnLogout_Click" 
-            Text="Logout" 
-            
-            style="left: 2px; text-align: center; font-family: 'Times New Roman', Times, serif;" 
-            Width="75px" />
-               </p>
-              
-    <p style="text-align: left; margin-left: 80px;">
-        <asp:Button ID="btnMenu" runat="server" onclick="btnMenu_Click" 
-            Text="Main Menu" 
-            
-            style="right: 2px; font-family: 'Times New Roman', Times, serif;" 
-            Width="84px" />
-         
-      </p>
-      <p style="text-align: left; margin-left: 80px;">
-          &nbsp;</p>
-      
-      <div>
-        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
-        
-        </asp:ContentPlaceHolder>
+</head>
+<body background="#ffffff">
+    <div id="header">
+        <br />
+        <ul id="menu">
+            <span class="menuItem">
+                <a class="menuButton" href="GrantSummary.aspx">
+                    <li>Main Menu</li>
+                </a>
+            </span>
+            <span class="menuItem">
+                <a class="menuButton" href="SearchStudent.aspx">
+                    <li>Search Students</li>
+                </a>
+            </span>
+            <span class="menuItem">
+                <a class="menuButton" href="AddGrant.aspx">
+                    <li>Add Grant</li>
+                </a>
+            </span>
+            <span class="menuItem">
+                <a class="menuButton" href="AddUser.aspx">
+                    <li>User Admin</li>
+                </a>
+            </span>
+
+            <span class="menuItem">
+                <a class="menuButton" href="CMS.aspx">
+                    <li>CMS</li>
+                </a>
+            </span>
+        </ul>
     </div>
-    </form>
+    <asp:Label ID="lblAdmin" runat="server" Text="" CssClass="standardText" ForeColor="red"></asp:Label>
+    <div id="content" class="standardText">
+        <form id="form1" runat="server">
+
+            <div id="name">
+                <center>
+                    <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large"
+                        Text="Student Financial Support 101"
+                        Style="font-family: 'myriad pro'" ForeColor="#808080"></asp:Label>
+                </center>
+            </div>
+
+            <div id="logoutButton">
+                <asp:Button ID="btnLogout" CssClass="standardButton" runat="server" OnClick="btnLogout_Click"
+                    Text="Logout" />
+            </div>
+
+
+            <div id="contentContainer">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

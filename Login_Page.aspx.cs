@@ -15,7 +15,6 @@ public partial class Login_Page : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         ((Button)this.Master.FindControl("btnLogout")).Visible = false;
-        ((Button)this.Master.FindControl("btnMenu")).Visible = false;
         txbLogin.Focus();
     }
     protected void Button1_Click(object sender, EventArgs e)
@@ -38,6 +37,7 @@ public partial class Login_Page : System.Web.UI.Page
             if (dr["LoginID"].ToString() == txbLogin.Text.Trim() && dr["Loginpassword"].ToString() == txbPassword.Text)
             {
                 Session["LoginAccepted"] = txbLogin.Text;
+                Session["LoginPassword"] = txbPassword.Text;
                 Response.Redirect("GrantSummary.aspx");
                 return;
             }
