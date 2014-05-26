@@ -23,12 +23,12 @@ public partial class Display_Info : System.Web.UI.Page
     {
         Response.Redirect("SearchStudent.aspx");
     }
-    
+
     protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
     {
         GridViewRow selectRow = GridView1.SelectedRow;
-        
+
         Session["studentID"] = GridView1.DataKeys[selectRow.RowIndex]["Student_ID"].ToString();
-       Response.Redirect("StudentGrantView.aspx");
+        Response.Redirect("StudentGrantView.aspx");
     }
 }

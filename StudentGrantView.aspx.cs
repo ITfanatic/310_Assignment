@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -19,11 +21,17 @@ public partial class StudentGrantView : System.Web.UI.Page
             Response.Redirect("Login_Page.aspx");
         }
     }
+
     protected void btnGrant_Click(object sender, EventArgs e)
     {
-        
+        if (CommonFunctionality.StudentHasReachedMaxGrantAllowance(Session["studentID"].ToString()))
+        {
+            Response.Write(CommonFunctionality.FormatMessageJs("This student has reached or exceeded the maximum grant allowance of $100."));
+        }
+        else
+        {
             Session["studentID"] = txbResult.Text;
             Response.Redirect("StudentGrants.aspx");
-        
+        }
     }
 }

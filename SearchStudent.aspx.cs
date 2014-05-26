@@ -27,9 +27,9 @@ public partial class SearchStudent : System.Web.UI.Page
     }
     protected void btnSearch_Click(object sender, EventArgs e)
     {
-         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["FinanceDBConnectionString1"].ConnectionString);
+        var con = new SqlConnection(ConfigurationManager.ConnectionStrings["FinanceDBConnectionString1"].ConnectionString);
 
-        SqlCommand cmd = new SqlCommand();
+        var cmd = new SqlCommand();
 
         cmd.CommandText = "select Student_ID,Fname from Student_Registration_Form";
 
@@ -38,20 +38,20 @@ public partial class SearchStudent : System.Web.UI.Page
 
         if (con.State == ConnectionState.Closed) con.Open();
 
-        SqlDataReader dr = cmd.ExecuteReader();
+        var dr = cmd.ExecuteReader();
 
         while (dr.Read())
         {
             if (dr["Student_ID"].ToString() == txtSearchID.Text.Trim())
             {
-                 Session["studentID"]=txtSearchID.Text;
-                 Response.Redirect("Display_Info.aspx");
+                Session["studentID"] = txtSearchID.Text;
+                Response.Redirect("Display_Info.aspx");
                 return;
             }
             else if (dr["Fname"].ToString() == txtSearchID.Text.Trim())
             {
-                 Session["studentID"]=txtSearchID.Text;
-                 Response.Redirect("Display_Info.aspx");
+                Session["studentID"] = txtSearchID.Text;
+                Response.Redirect("Display_Info.aspx");
                 return;
             }
             else if (txtSearchID.Text == "")

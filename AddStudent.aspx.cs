@@ -20,11 +20,25 @@ public partial class AddStudent : System.Web.UI.Page
             Response.Redirect("Login_Page.aspx");
         }
 
+        if (!IsPostBack)
+        {
+            CommonFunctionality.PopulateDropdownList("FacultiesCMS", "FacultyName", null, ddlFaculty);
 
+            CommonFunctionality.PopulateDropdownList("CoursesCMS","CourseName","FacultyId='1'",ddlArts);
+            CommonFunctionality.PopulateDropdownList("CoursesCMS", "CourseName", "FacultyId='2'", ddlBusiness);
+            CommonFunctionality.PopulateDropdownList("CoursesCMS", "CourseName", "FacultyId='3'", ddlHealth);
+            CommonFunctionality.PopulateDropdownList("CoursesCMS", "CourseName", "FacultyId='5'", ddlIndustries);
+            CommonFunctionality.PopulateDropdownList("CoursesCMS", "CourseName", "FacultyId='6'", ddlTrades);
+            CommonFunctionality.PopulateDropdownList("CoursesCMS", "CourseName", "FacultyId='7'", ddlMaori);
+
+            txbEthnicity.Visible = false;
+        }
     }
+
     protected void ButtonAddStudent_Click(object sender, EventArgs e)
     {
-        SqlConnection con1 = new SqlConnection(ConfigurationManager.ConnectionStrings["FinanceDBConnectionString1"].ConnectionString);
+        SqlConnection con1 =
+            new SqlConnection(ConfigurationManager.ConnectionStrings["FinanceDBConnectionString1"].ConnectionString);
 
         SqlCommand cmd1 = new SqlCommand();
 
@@ -34,13 +48,13 @@ public partial class AddStudent : System.Web.UI.Page
         cmd1.ExecuteNonQuery();
         SqlDataReader dr = cmd1.ExecuteReader();
         DateTime DOB;
-        
+
         if (txbID.Text == "")
         {
             Response.Write("<script>alert('Please input Student ID')</script>");
             txbID.Focus();
         }
-        
+
         else if (txbFname.Text == "")
         {
             Response.Write("<script>alert('Please enter the first name of the student')</script>");
@@ -90,9 +104,17 @@ public partial class AddStudent : System.Web.UI.Page
             {
 
                 DOB = Convert.ToDateTime(txbDOB.Text);
-                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["FinanceDBConnectionString1"].ConnectionString);
+                SqlConnection con =
+                    new SqlConnection(
+                        ConfigurationManager.ConnectionStrings["FinanceDBConnectionString1"].ConnectionString);
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO Student_Registration_Form (Student_ID,FName,LName,Gender,DOB,Address1,Accomodition_Type,Phone,Mobile,Email,Marital_Status,Contact,Main_Ethnicity,Faculty,Courses,Detailed_Ethnicity,campus) VALUES (@Student_ID,@FName,@LName,@Gender,@DOB,@Address,@Accomodition_Type,@Phone,@Mobile,@Email,@Marital_Status,@Contact,@Main_Ethnicity,@Faculty,@Courses,@Detailed_Ethnicity,@campus)", con);
+                SqlCommand cmd =
+                    new SqlCommand(
+                        @"INSERT INTO 
+                            Student_Registration_Form (Student_ID,FName,LName,Gender,DOB,Address1,Accomodition_Type,Phone,Mobile,Email,Marital_Status,Contact,Main_Ethnicity,Faculty,Courses,Detailed_Ethnicity,campus) 
+                          VALUES 
+                            (@Student_ID,@FName,@LName,@Gender,@DOB,@Address,@Accomodition_Type,@Phone,@Mobile,@Email,@Marital_Status,@Contact,@Main_Ethnicity,@Faculty,@Courses,@Detailed_Ethnicity,@campus)",
+                        con);
 
                 cmd.Parameters.AddWithValue("@Student_ID", txbID.Text);
                 cmd.Parameters.AddWithValue("@FName", txbFname.Text);
@@ -107,36 +129,36 @@ public partial class AddStudent : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@Marital_Status", ddlStatus.SelectedValue);
                 cmd.Parameters.AddWithValue("@Contact", ddlContact.SelectedValue);
                 cmd.Parameters.AddWithValue("@Main_Ethnicity", ddlEthnicity.SelectedValue);
-                cmd.Parameters.AddWithValue("@Faculty", ddlFaculty.SelectedValue);
+                cmd.Parameters.AddWithValue("@Faculty", ddlFaculty.SelectedItem.Text);//can't use SelectedValue for ddl's populated by database as the value is the ID, text is the name
                 cmd.Parameters.AddWithValue("@Detailed_Ethnicity", txbEthnicity.Text);
                 cmd.Parameters.AddWithValue("@campus", ddlCampus.SelectedValue);
                 if (ddlArts.Visible == true)
                 {
-                    cmd.Parameters.AddWithValue("@Courses", ddlArts.SelectedValue);
+                    cmd.Parameters.AddWithValue("@Courses", ddlArts.SelectedItem.Text);
                 }
                 else if (ddlBusiness.Visible == true)
                 {
-                    cmd.Parameters.AddWithValue("@Courses", ddlBusiness.SelectedValue);
+                    cmd.Parameters.AddWithValue("@Courses", ddlBusiness.SelectedItem.Text);
                 }
                 else if (ddlIndustries.Visible == true)
                 {
-                    cmd.Parameters.AddWithValue("@Courses", ddlIndustries.SelectedValue);
+                    cmd.Parameters.AddWithValue("@Courses", ddlIndustries.SelectedItem.Text);
                 }
                 else if (ddlTrades.Visible == true)
                 {
-                    cmd.Parameters.AddWithValue("@Courses", ddlTrades.SelectedValue);
+                    cmd.Parameters.AddWithValue("@Courses", ddlTrades.SelectedItem.Text);
                 }
                 else if (ddlMaori.Visible == true)
                 {
-                    cmd.Parameters.AddWithValue("@Courses", ddlMaori.SelectedValue);
+                    cmd.Parameters.AddWithValue("@Courses", ddlMaori.SelectedItem.Text);
                 }
                 else if (ddlHealth.Visible == true)
                 {
-                    cmd.Parameters.AddWithValue("@Courses", ddlHealth.SelectedValue);
+                    cmd.Parameters.AddWithValue("@Courses", ddlHealth.SelectedItem.Text);
                 }
                 else
                 {
-                    cmd.Parameters.AddWithValue("@Courses", ddlFaculty.SelectedValue);
+                    cmd.Parameters.AddWithValue("@Courses", ddlFaculty.SelectedItem.Text);
                 }
 
                 con.Open();
@@ -176,8 +198,8 @@ public partial class AddStudent : System.Web.UI.Page
             }
 
         }
-        
-        
+
+
     }
 
     protected void Addhardship_Click(object sender, EventArgs e)
@@ -190,84 +212,47 @@ public partial class AddStudent : System.Web.UI.Page
     {
 
     }
+
     protected void ddlFaculty_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlFaculty.SelectedValue == "Faculty of Arts")
+        // need to use the Id in these decisons instead of the Name because the Name of the faculty can now be changed through the CMS page
+        switch (ddlFaculty.SelectedValue)
         {
-            ddlArts.Visible = true;
-            ddlBusiness.Visible = false;
-            ddlHealth.Visible = false;
-            ddlIndustries.Visible = false;
-            ddlTrades.Visible = false;
-            ddlMaori.Visible = false;
-            ddlArts.Focus();
-        }
-        else if (ddlFaculty.SelectedValue == "Faculty of Business")
-        {
-            ddlArts.Visible = false;
-            ddlBusiness.Visible = true;
-            ddlHealth.Visible = false;
-            ddlIndustries.Visible = false;
-            ddlTrades.Visible = false;
-            ddlMaori.Visible = false;
-            ddlBusiness.Focus();
-        }
-        else if (ddlFaculty.SelectedValue == "Faculty of Health")
-        {
-            ddlArts.Visible = false;
-            ddlBusiness.Visible = false;
-            ddlHealth.Visible = true;
-            ddlIndustries.Visible = false;
-            ddlTrades.Visible = false;
-            ddlMaori.Visible = false;
-            ddlHealth.Focus();
-        }
-        else if (ddlFaculty.SelectedValue == "Faculty of Service Industries")
-        {
-            ddlArts.Visible = false;
-            ddlBusiness.Visible = false;
-            ddlHealth.Visible = false;
-            ddlIndustries.Visible = true;
-            ddlTrades.Visible = false;
-            ddlMaori.Visible = false;
-            ddlIndustries.Focus();
-        }
-        else if (ddlFaculty.SelectedValue == "Faculty of Trades")
-        {
-            ddlArts.Visible = false;
-            ddlBusiness.Visible = false;
-            ddlHealth.Visible = false;
-            ddlIndustries.Visible = false;
-            ddlTrades.Visible = true;
-            ddlMaori.Visible = false;
-            ddlTrades.Focus();
-        }
-        else if (ddlFaculty.SelectedValue == "Te Wananga Maori")
-        {
-            ddlArts.Visible = false;
-            ddlBusiness.Visible = false;
-            ddlHealth.Visible = false;
-            ddlIndustries.Visible = false;
-            ddlTrades.Visible = false;
-            ddlMaori.Visible = true;
-            ddlMaori.Focus();
-        }
-        else
-        {
-            ddlArts.Visible = false;
-            ddlBusiness.Visible = false;
-            ddlHealth.Visible = false;
-            ddlIndustries.Visible = false;
-            ddlTrades.Visible = false;
-            ddlMaori.Visible = false;
-            ddlFaculty.Focus();
+            case "1":
+                ShowCourseDropDown(true, false, false, false, false, false);
+                ddlArts.Focus();
+                break;
+            case "2":
+                ShowCourseDropDown(false, true, false, false, false, false);
+                ddlBusiness.Focus();
+                break;
+            case "3":
+                ShowCourseDropDown(false, false, true, false, false, false);
+                ddlHealth.Focus();
+                break;
+            case "5":
+                ShowCourseDropDown(false, false, false, true, false, false);
+                ddlIndustries.Focus();
+                break;
+            case "6":
+                ShowCourseDropDown(false, false, false, false, true, false);
+                ddlTrades.Focus();
+                break;
+            case "7":
+                ShowCourseDropDown(false, false, false, false, false, true);
+                ddlMaori.Focus();
+                break;
+            default:
+                ShowCourseDropDown(false, false, false, false, false, false);
+                ddlFaculty.Focus();
+                break;
         }
     }
 
-
     protected void DropDownList5_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (ddlEthnicity.SelectedValue == "Pacific" || ddlEthnicity.SelectedValue == "Asian" || ddlEthnicity.SelectedValue == "Other")
+        if (ddlEthnicity.SelectedValue == "Pacific" || ddlEthnicity.SelectedValue == "Asian" ||
+            ddlEthnicity.SelectedValue == "Other")
         {
             txbEthnicity.Visible = true;
             txbEthnicity.Focus();
@@ -278,13 +263,25 @@ public partial class AddStudent : System.Web.UI.Page
             ddlCampus.Focus();
         }
     }
+
     protected void ddlIndustries_SelectedIndexChanged(object sender, EventArgs e)
     {
 
     }
+
     protected void MainMenu_Click(object sender, EventArgs e)
     {
         Response.Redirect("GrantSummary.aspx");
+    }
+
+    private void ShowCourseDropDown(bool showArts, bool showBusiness, bool showHealth, bool showIndustries, bool showTrades, bool showMaori)
+    {
+        ddlArts.Visible = showArts;
+        ddlBusiness.Visible = showBusiness;
+        ddlHealth.Visible = showHealth;
+        ddlIndustries.Visible = showIndustries;
+        ddlTrades.Visible = showTrades;
+        ddlMaori.Visible = showMaori;
     }
 }
 

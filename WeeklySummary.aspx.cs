@@ -19,20 +19,31 @@ public partial class PetrolMonthlySummary : System.Web.UI.Page
         {
 
             if (Session["Vouchers"] != null && Session["Month"] != null && Session["weeklyYear"] != null)
-
+            {
                 txbReadVoucher.Text = Session["Vouchers"].ToString();
-            txbReadWeeklyYear.Text = Session["weeklyYear"].ToString();
-            txbReadMonth.Text = Session["Month"].ToString();
+                txbReadWeeklyYear.Text = Session["weeklyYear"].ToString();
+                txbReadMonth.Text = Session["Month"].ToString();
+            }
 
             GridView1.DataBind();
 
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["FinanceDBConnectionString1"].ConnectionString);
+            var con = new SqlConnection(ConfigurationManager.ConnectionStrings["FinanceDBConnectionString1"].ConnectionString);
 
-            SqlCommand cmd = new SqlCommand();
-
-            cmd.CommandText = "select count(distinct student_ID) as NoofStudents,count(student_ID) as NoofGrants,sum(GrantValue) as MonthSum,sum(ISNULL(kuhafunds,0)) as KohaMonthSum ,(sum(GrantValue)+sum(ISNULL(kuhafunds,0))) as TotalMonthSum,datename(MONTH,DateOfIssue) as Monthname from Student_vouchers where Month(DateOfIssue) = @month and granttype=@Vouchers and Year(DateOfIssue)=@Year group by datename(MONTH,DateOfIssue)";
-
-            cmd.Connection = con;
+            var cmd = new SqlCommand(@"
+                SELECT 
+                    count(distinct student_ID) AS NoofStudents,
+                    count(student_ID) AS NoofGrants,
+                    sum(GrantValue) AS MonthSum,
+                    sum(ISNULL(kuhafunds,0)) AS KohaMonthSum,
+                    (sum(GrantValue)+sum(ISNULL(kuhafunds,0))) AS TotalMonthSum,
+                    datename(MONTH,DateOfIssue) AS Monthname 
+                FROM 
+                    Student_vouchers 
+                WHERE 
+                    Month(DateOfIssue)=@month AND granttype=@Vouchers AND Year(DateOfIssue)=@Year 
+                GROUP BY 
+                    datename(MONTH,DateOfIssue)",
+                con);
 
             cmd.Parameters.AddWithValue("@month", txbReadMonth.Text);
             cmd.Parameters.AddWithValue("@Year", txbReadWeeklyYear.Text);
@@ -43,54 +54,49 @@ public partial class PetrolMonthlySummary : System.Web.UI.Page
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
             {
-
-                if (txbReadVoucher.Text == "PetrolVouchers")
+                switch (txbReadVoucher.Text)
                 {
-                    lblMsg.Text = "Total Amount Spent on Petrol Vouchers for " + dr["NoofGrants"] + " grants on " + dr["NoofStudents"] + " students for the month is $ " + dr["TotalMonthSum"];
-                    lblMsgfunds.Text = "Amount spend from  Funds= $ " + dr["MonthSum"];
-                    lblMsgKohafunds.Text = "Amount spend from Koha Funds= $ " + dr["KohaMonthSum"];
-                    Titletext.Visible = true;
-                    Titletext.Text = "Weekly Summary Report on Petrol Vouchers for the month of " + dr["Monthname"] + " in Year " + txbReadWeeklyYear.Text;
-                }
-                else if (txbReadVoucher.Text == "Hardship")
-                {
-                    lblMsg.Text = "Total Amount Spent on Hardships for " + dr["NoofGrants"] + " grants on " + dr["NoofStudents"] + " students for the month is $ " + dr["TotalMonthSum"];
-                    lblMsgfunds.Text = "Amount spend from  Funds= $ " + dr["MonthSum"];
-                    lblMsgKohafunds.Text = "Amount spend from Koha Funds= $ " + dr["KohaMonthSum"];
-                    Titletext.Visible = true;
-                    Titletext.Text = "Weekly Summary Report on Hardship for the month of " + dr["Monthname"] + " in Year " + txbReadWeeklyYear.Text;
-                }
-                else if (txbReadVoucher.Text == "TrainTickets")
-                {
-                    lblMsg.Text = "Total Amount Spent on Train Tickets for " + dr["NoofGrants"] + " grants on " + dr["NoofStudents"] + " students for the month is $ " + dr["TotalMonthSum"];
-                    lblMsgfunds.Text = "Amount spend from  Funds= $ " + dr["MonthSum"];
-                    lblMsgKohafunds.Text = "Amount spend from Koha Funds= $ " + dr["KohaMonthSum"];
-                    Titletext.Visible = true;
-                    Titletext.Text = "Weekly Summary Report on Train Tickets for the month of " + dr["Monthname"] + " in Year " + txbReadWeeklyYear.Text;
-                }
-                else if (txbReadVoucher.Text == "FoodVouchers")
-                {
-                    lblMsg.Text = "Total Amount Spent on Food Vouchers for " + dr["NoofGrants"] + " grants on " + dr["NoofStudents"] + " students for the month is $ " + dr["TotalMonthSum"];
-                    lblMsgfunds.Text = "Amount spend from  Funds= $ " + dr["MonthSum"];
-                    lblMsgKohafunds.Text = "Amount spend from Koha Funds= $ " + dr["KohaMonthSum"];
-                    Titletext.Visible = true;
-                    Titletext.Text = "Weekly Summary Report on Food Vouchers for the month of " + dr["Monthname"] + " in Year " + txbReadWeeklyYear.Text;
-                }
-                else if (txbReadVoucher.Text == "Advice")
-                {
-                    lblMsg.Text = "Total Amount Spent on Advice for " + dr["NoofGrants"] + " grants on " + dr["NoofStudents"] + " students for the month is $ " + dr["TotalMonthSum"];
-                    lblMsgfunds.Text = "Amount spend from  Funds= $ " + dr["MonthSum"];
-                    lblMsgKohafunds.Text = "Amount spend from Koha Funds= $ " + dr["KohaMonthSum"];
-                    Titletext.Visible = true;
-                    Titletext.Text = "Weekly Summary Report on Advice for the month of " + dr["Monthname"] + " in Year " + txbReadWeeklyYear.Text;
+                    case "PetrolVouchers":
+                        lblMsg.Text = "Total Amount Spent on Petrol Vouchers for " + dr["NoofGrants"] + " grants on " + dr["NoofStudents"] + " students for the month is $ " + dr["TotalMonthSum"];
+                        lblMsgfunds.Text = "Amount spend from  Funds= $ " + dr["MonthSum"];
+                        lblMsgKohafunds.Text = "Amount spend from Koha Funds= $ " + dr["KohaMonthSum"];
+                        Titletext.Visible = true;
+                        Titletext.Text = "Weekly Summary Report on Petrol Vouchers for the month of " + dr["Monthname"] + " in Year " + txbReadWeeklyYear.Text;
+                        break;
+                    case "Hardship":
+                        lblMsg.Text = "Total Amount Spent on Hardships for " + dr["NoofGrants"] + " grants on " + dr["NoofStudents"] + " students for the month is $ " + dr["TotalMonthSum"];
+                        lblMsgfunds.Text = "Amount spend from  Funds= $ " + dr["MonthSum"];
+                        lblMsgKohafunds.Text = "Amount spend from Koha Funds= $ " + dr["KohaMonthSum"];
+                        Titletext.Visible = true;
+                        Titletext.Text = "Weekly Summary Report on Hardship for the month of " + dr["Monthname"] + " in Year " + txbReadWeeklyYear.Text;
+                        break;
+                    case "TrainTickets":
+                        lblMsg.Text = "Total Amount Spent on Train Tickets for " + dr["NoofGrants"] + " grants on " + dr["NoofStudents"] + " students for the month is $ " + dr["TotalMonthSum"];
+                        lblMsgfunds.Text = "Amount spend from  Funds= $ " + dr["MonthSum"];
+                        lblMsgKohafunds.Text = "Amount spend from Koha Funds= $ " + dr["KohaMonthSum"];
+                        Titletext.Visible = true;
+                        Titletext.Text = "Weekly Summary Report on Train Tickets for the month of " + dr["Monthname"] + " in Year " + txbReadWeeklyYear.Text;
+                        break;
+                    case "FoodVouchers":
+                        lblMsg.Text = "Total Amount Spent on Food Vouchers for " + dr["NoofGrants"] + " grants on " + dr["NoofStudents"] + " students for the month is $ " + dr["TotalMonthSum"];
+                        lblMsgfunds.Text = "Amount spend from  Funds= $ " + dr["MonthSum"];
+                        lblMsgKohafunds.Text = "Amount spend from Koha Funds= $ " + dr["KohaMonthSum"];
+                        Titletext.Visible = true;
+                        Titletext.Text = "Weekly Summary Report on Food Vouchers for the month of " + dr["Monthname"] + " in Year " + txbReadWeeklyYear.Text;
+                        break;
+                    case "Advice":
+                        lblMsg.Text = "Total Amount Spent on Advice for " + dr["NoofGrants"] + " grants on " + dr["NoofStudents"] + " students for the month is $ " + dr["TotalMonthSum"];
+                        lblMsgfunds.Text = "Amount spend from  Funds= $ " + dr["MonthSum"];
+                        lblMsgKohafunds.Text = "Amount spend from Koha Funds= $ " + dr["KohaMonthSum"];
+                        Titletext.Visible = true;
+                        Titletext.Text = "Weekly Summary Report on Advice for the month of " + dr["Monthname"] + " in Year " + txbReadWeeklyYear.Text;
+                        break;
                 }
             }
             else
             {
-                GridView1.EmptyDataText="Sorry, No data to display..!!";
+                GridView1.EmptyDataText = "Sorry, No data to display..!!";
             }
         }
     }
-
-    
 }
