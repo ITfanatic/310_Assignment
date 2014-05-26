@@ -1,0 +1,48 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+   
+
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    </head>
+<body  background="images/Websitedesign.png" >
+      <form id="form1" runat="server">
+      <center>
+    <h1>
+        <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Size="XX-Large" 
+            Text="*Student Financial Support System*" 
+            style="font-family: 'Arno Pro SmText'"></asp:Label>  
+     </h1>
+     </center>
+     <p style="text-align: right; margin-right: 80px;">
+      <asp:Button ID="btnLogout" runat="server" onclick="btnLogout_Click" 
+            Text="Logout" 
+            
+            style="left: 2px; text-align: center; font-family: 'Times New Roman', Times, serif;" 
+            Width="75px" />
+               </p>
+              
+    <p style="text-align: left; margin-left: 80px;">
+        <asp:Button ID="btnMenu" runat="server" onclick="btnMenu_Click" 
+            Text="Main Menu" 
+            
+            style="right: 2px; font-family: 'Times New Roman', Times, serif;" 
+            Width="84px" />
+         
+      </p>
+      <p style="text-align: left; margin-left: 80px;">
+          &nbsp;</p>
+      
+      <div>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>
