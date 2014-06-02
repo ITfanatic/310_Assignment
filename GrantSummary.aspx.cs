@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 using System.Configuration;
@@ -12,6 +13,10 @@ public partial class GrantSummary : System.Web.UI.Page
         {
 
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            if (!IsPostBack)
+            {
+                CommonFunctionality.PopulateDropdownList("GrantsCMS", "GrantName", null, ddlVoucher);
+            }
         }
         else
         {
@@ -34,7 +39,7 @@ public partial class GrantSummary : System.Web.UI.Page
         }
         else
         {
-            Session["Vouchers"] = ddlVoucher.SelectedValue;
+            Session["Vouchers"] = ddlVoucher.SelectedItem.Text;
             Session["Month"] = ddlMonth.SelectedValue;
             Session["weeklyYear"] = ddlweeklyYear.SelectedValue;
             Response.Redirect("WeeklySummary.aspx");
@@ -224,6 +229,20 @@ public partial class GrantSummary : System.Web.UI.Page
             con.Close();
         }
 
-        return existingEthnicities.Contains(ethnicity);
+        return existingEthnicities.Any(x => x.Equals(ethnicity, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    protected void ddlMonthlySummary_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ddlMonthlySummary.SelectedIndex == 0)
+        {
+            Response.Write("<script>alert('Please make sure you have selected the month.')</script>");
+            ddlMonthlySummary.SelectedIndex = 0;
+        }
+        else
+        {
+            Session["MonthlySummary"] = ddlMonthlySummary.SelectedValue;
+            Response.Redirect("MonthlySummary.aspx");
+        }
     }
 }

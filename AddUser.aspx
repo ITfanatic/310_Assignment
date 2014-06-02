@@ -14,7 +14,7 @@
             margin-left: 100px;
             border: 1px solid #d3d3d3;
             border-radius: 5px;
-            padding-bottom: 700px;
+            padding-bottom: 800px;
             padding-right: 800px;
             background-color: #fffafa;
         }
@@ -29,7 +29,7 @@
 
         #changePasswordFields {
             position: absolute;
-            margin-top: 400px;
+            margin-top: 500px;
             margin-left: 200px;
             border: 2px solid #d3d3d3;
             padding: 5px;
@@ -88,6 +88,18 @@
                         <asp:RadioButton ID="radYes" runat="server" CssClass="standardText" GroupName="adminRadios" Text="Yes"></asp:RadioButton>
                         <asp:RadioButton ID="radNo" runat="server" CssClass="standardText" GroupName="adminRadios" Text="No"></asp:RadioButton>
                     </td>
+                </tr>
+                <tr>
+                    <td class="standardText">Enter secret question:</td>
+                    <td class="field">
+                        <asp:TextBox ID="txtSecretQuestion" runat="server" BorderStyle="Groove" ValidationGroup="CreateUser"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtSecretQuestion" Display="Dynamic" Text="* Secret question is required" ValidationGroup="CreateUser"></asp:RequiredFieldValidator></td>
+                </tr>
+                <tr>
+                    <td class="standardText">Enter secret question answer:</td>
+                    <td class="field">
+                        <asp:TextBox ID="txtSecretQuestionAnswer" runat="server" BorderStyle="Groove" ValidationGroup="CreateUser"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="txtSecretQuestionAnswer" Display="Dynamic" Text="* Secret answer is required" ValidationGroup="CreateUser"></asp:RequiredFieldValidator></td>
                 </tr>
                 <tr>
                     <td colspan="2" style="text-align: center;">

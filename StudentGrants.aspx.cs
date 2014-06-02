@@ -99,7 +99,7 @@ public partial class StudentGrants : System.Web.UI.Page
 
 
                             cmd.Parameters.AddWithValue("@Student_ID", StudentID.Text);
-                            cmd.Parameters.AddWithValue("@GrantType", VoucherType.Text);//TODO check if these are still working
+                            cmd.Parameters.AddWithValue("@GrantType", VoucherType.SelectedItem.Text);//TODO check if these are still working
                             cmd.Parameters.AddWithValue("@GrantDescription", GrantDescriptiontxt.Text);
                             cmd.Parameters.AddWithValue("@GrantValue", VoucherValue.Text);
                             cmd.Parameters.AddWithValue("@KuhaFunds", txbKuha.Text);
@@ -113,8 +113,11 @@ public partial class StudentGrants : System.Web.UI.Page
                             txbKuha.Text = "";
 
                             lblKoha.ForeColor = System.Drawing.Color.Black;
+                            lblKoha.Font.Bold = false;
                             lblValue.ForeColor = System.Drawing.Color.Black;
+                            lblValue.Font.Bold = false;
                             GrantDescriptionLbl.ForeColor = System.Drawing.Color.Black;
+                            GrantDescriptionLbl.Font.Bold = false;
                         }
                         else
                         {
@@ -146,8 +149,8 @@ public partial class StudentGrants : System.Web.UI.Page
 
 
                         cmd.Parameters.AddWithValue("@Student_ID", StudentID.Text);
-                        cmd.Parameters.AddWithValue("@GrantType", VoucherType.Text);
-                        cmd.Parameters.AddWithValue("@GrantDescription", VoucherType.Text);
+                        cmd.Parameters.AddWithValue("@GrantType", VoucherType.SelectedItem.Text);
+                        cmd.Parameters.AddWithValue("@GrantDescription", VoucherType.SelectedItem.Text);
                         cmd.Parameters.AddWithValue("@GrantValue", VoucherValue.Text);
                         con.Open();
                         cmd.ExecuteNonQuery();
@@ -181,7 +184,7 @@ public partial class StudentGrants : System.Web.UI.Page
 
 
                     cmd.Parameters.AddWithValue("@Student_ID", StudentID.Text);
-                    cmd.Parameters.AddWithValue("@GrantType", VoucherType.Text);
+                    cmd.Parameters.AddWithValue("@GrantType", VoucherType.SelectedItem.Text);
                     cmd.Parameters.AddWithValue("@GrantDescription", GrantDescriptiontxt.Text);
                     cmd.Parameters.AddWithValue("@GrantValue", 0);
                     con.Open();

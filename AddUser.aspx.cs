@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Windows.Forms;
 
 public partial class AddUser : System.Web.UI.Page
 {
@@ -48,14 +44,23 @@ public partial class AddUser : System.Web.UI.Page
             if (UserIDExists())
             {
                 Response.Write("<script>alert('Sorry, that user ID is already in use')</script>");
-                txtNewUserName.Text = CommonFunctionality.ClearText();
+                txtNewUserName.Text = string.Empty;
                 txtNewUserName.Focus();
             }
             else
             {
-                AddNewUser();
-                Response.Write("<script>alert('Successful')</script>");
-                txtNewUserName.Text = string.Empty;
+                if (Regex.IsMatch(txtSecretQuestionAnswer.Text, "^[a-zA-Z0-9]+$"))
+                {
+                    AddNewUser();
+                    Response.Write("<script>alert('Successful')</script>");
+                    txtNewUserName.Text = string.Empty;
+                    txtSecretQuestion.Text = string.Empty;
+                    txtSecretQuestionAnswer.Text = string.Empty;
+                }
+                else
+                {
+                    Response.Write(CommonFunctionality.FormatMessageJs("Secret answer can only contain letters and numbers"));
+                }
             }
         }
     }
@@ -100,13 +105,16 @@ public partial class AddUser : System.Web.UI.Page
         var LoginID = txtNewUserName.Text.Trim();
         var LoginPassword = txtPassword.Text;
         var userIsAdministrator = radYes.Checked;
+        var secretQuestion = txtSecretQuestion.Text.Trim().Replace("'", "");
+        var secretAnswer = txtSecretQuestionAnswer.Text.Trim();
 
         var query =
             @"
             INSERT INTO 
                 LoginDetails 
             VALUES 
-                ('" + LoginID + "','" + LoginPassword + "','" + userIsAdministrator + "')";
+                ('" + LoginID + "','" + LoginPassword + "','" + userIsAdministrator + "','" + secretQuestion + "','" +
+            secretAnswer + "')";
 
         var cmd = new SqlCommand(query, con);
 

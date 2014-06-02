@@ -28,7 +28,7 @@
             text-align: center;
             height: 100px;
             width: 101%;
-            min-width: 1015px;
+            min-width: 1200px;
             margin-top: -30px;
             margin-left: -10px;
             border-bottom: 2px solid #00bfff;
@@ -46,7 +46,7 @@
 
         #name {
             position: relative;
-            top: 25px;
+            top: 20px;
         }
 
         .menuButton:link {
@@ -84,7 +84,7 @@
         #logoutButton {
             display: block;
             margin-top: -115px;
-            margin-left: 1000px;
+            margin-left: 1090px;
         }
 
         .standardHeader {
@@ -131,10 +131,14 @@
                     <li>User Admin</li>
                 </a>
             </span>
-
             <span class="menuItem">
                 <a class="menuButton" href="CMS.aspx">
                     <li>CMS</li>
+                </a>
+            </span>
+            <span class="menuItem">
+                <a class="menuButton" href="Sitemap.aspx">
+                    <li>Sitemap</li>
                 </a>
             </span>
         </ul>

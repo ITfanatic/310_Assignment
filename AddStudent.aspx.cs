@@ -24,7 +24,7 @@ public partial class AddStudent : System.Web.UI.Page
         {
             CommonFunctionality.PopulateDropdownList("FacultiesCMS", "FacultyName", null, ddlFaculty);
 
-            CommonFunctionality.PopulateDropdownList("CoursesCMS","CourseName","FacultyId='1'",ddlArts);
+            CommonFunctionality.PopulateDropdownList("CoursesCMS", "CourseName", "FacultyId='1'", ddlArts);
             CommonFunctionality.PopulateDropdownList("CoursesCMS", "CourseName", "FacultyId='2'", ddlBusiness);
             CommonFunctionality.PopulateDropdownList("CoursesCMS", "CourseName", "FacultyId='3'", ddlHealth);
             CommonFunctionality.PopulateDropdownList("CoursesCMS", "CourseName", "FacultyId='5'", ddlIndustries);
@@ -120,7 +120,7 @@ public partial class AddStudent : System.Web.UI.Page
                 cmd.Parameters.AddWithValue("@FName", txbFname.Text);
                 cmd.Parameters.AddWithValue("@LName", txbLname.Text);
                 cmd.Parameters.AddWithValue("@Gender", ddlGender.SelectedValue);
-                cmd.Parameters.AddWithValue("@DOB", txbDOB.Text);
+                cmd.Parameters.AddWithValue("@DOB", DOB);
                 cmd.Parameters.AddWithValue("@Address", txbAddress.Text);
                 cmd.Parameters.AddWithValue("@Accomodition_Type", ddlAccomodition.SelectedValue);
                 cmd.Parameters.AddWithValue("@Phone", txbPhone.Text);
@@ -191,7 +191,7 @@ public partial class AddStudent : System.Web.UI.Page
                 ddlArts.Visible = false;
                 ddlHealth.Visible = false;
             }
-            catch
+            catch(SqlException)
             {
                 Response.Write("<script>alert('Please input the right format for Date Of Birth')</script>");
                 txbDOB.Focus();

@@ -61,7 +61,7 @@
 
             <tr>
                 <td colspan="2" align="center">
-                    <asp:HyperLink ID="hlPWD" runat="server" NavigateUrl="~/Forgotpasword.aspx" Font-Names="Myriad Pro">Forgot Password</asp:HyperLink></td>
+                    <asp:Button ID="btnForgotPassword" runat="server" Text="Forgot Password" CssClass="standardButton" Width="200px" OnClick="btnForgotPassword_Click"/></td>
             </tr>
         </table>
     </div>
