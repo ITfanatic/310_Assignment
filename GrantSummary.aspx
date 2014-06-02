@@ -103,11 +103,6 @@
                     OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged"
                     Width="167px" Style="height: 22px" Height="23px">
                     <asp:ListItem>Please select voucher</asp:ListItem>
-                    <asp:ListItem Value="PetrolVouchers">Petrol Voucher</asp:ListItem>
-                    <asp:ListItem Value="FoodVouchers">Food  Voucher</asp:ListItem>
-                    <asp:ListItem Value="TrainTickets">Train  Tickets</asp:ListItem>
-                    <asp:ListItem Value="Hardship">Hardship </asp:ListItem>
-                    <asp:ListItem>Advice</asp:ListItem>
                 </asp:DropDownList>
                 <br />
             </td>
@@ -323,9 +318,30 @@
             </td>
 
         </tr>
-
         <tr>
-            <td>Year-to-date Summary:</td>
+            <td>Monthly Summary:</td>
+            <td>
+                <asp:DropDownList ID="ddlMonthlySummary" runat="server" AutoPostBack="True"
+                    OnSelectedIndexChanged="ddlMonthlySummary_SelectedIndexChanged" Height="22px"
+                    Width="167px">
+                    <asp:ListItem>Please select the month</asp:ListItem>
+                    <asp:ListItem Value="1">January</asp:ListItem>
+                    <asp:ListItem Value="2">February</asp:ListItem>
+                    <asp:ListItem Value="3">March</asp:ListItem>
+                    <asp:ListItem Value="4">April</asp:ListItem>
+                    <asp:ListItem Value="5">May</asp:ListItem>
+                    <asp:ListItem Value="6">June</asp:ListItem>
+                    <asp:ListItem Value="7">July</asp:ListItem>
+                    <asp:ListItem Value="8">August</asp:ListItem>
+                    <asp:ListItem Value="9">September</asp:ListItem>
+                    <asp:ListItem Value="10">October</asp:ListItem>
+                    <asp:ListItem Value="11">November</asp:ListItem>
+                    <asp:ListItem Value="12">December</asp:ListItem>
+                </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td>Annual Summary:</td>
             <td>
                 <asp:DropDownList ID="ddlYeartodateyear" runat="server" AutoPostBack="True"
                     OnSelectedIndexChanged="ddlYeartodateyear_SelectedIndexChanged" Height="22px"

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 public partial class AgeReport : System.Web.UI.Page
 {
@@ -29,7 +23,7 @@ public partial class AgeReport : System.Web.UI.Page
             grdAgeReport.DataBind();
             DispayExtraInfo();
         }
-        catch (System.Data.SqlClient.SqlException)
+        catch (SqlException)
         {
             Response.Write(
                 @"<script language='javascript'>

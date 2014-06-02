@@ -72,7 +72,10 @@ public partial class Login_Page : System.Web.UI.Page
     }
     protected void Forgorpwd_Click(object sender, EventArgs e)
     {
-       
+    }
+
+    protected void btnForgotPassword_Click(object sender, EventArgs e)
+    {
         Response.Redirect("Forgotpasword.aspx");
     }
 }

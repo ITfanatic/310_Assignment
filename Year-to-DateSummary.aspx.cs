@@ -34,8 +34,8 @@ public partial class Year_to_DateSummary : System.Web.UI.Page
                 TotalSum.Text = "     The Total Amount Year-to-date on all grants is: $" + dr["TotalGrantAmount"].ToString() + " (Grant Amount= " + dr["GrantAmount"] + " , Koha Funds Grant Amount= " + dr["KohaGrantAmount"] + " )";
                 TotalGrants.Text = "  The Total Grants issued Year-to-date  is: " + dr["TotalGrants"].ToString();
                 Totalstudents.Text = "The Total Students received grants Year-to-date  is: " + dr["TotalStudents"].ToString();
-                TitleTXT.Text = "Overall Summary for all Vouchers, Hardships and Advices for the Year " + txbYear.Text + " Year-to-date";
-               
+                TitleTXT.Text = "Overall Annual Summary for all Vouchers, Hardships and Advices for the Year " + txbYear.Text;
+
             }
             else
             {
@@ -49,7 +49,7 @@ public partial class Year_to_DateSummary : System.Web.UI.Page
 
 
     }
-    
+
 }
 
 

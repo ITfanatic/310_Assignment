@@ -8,7 +8,7 @@
             color: #808080;
         }
 
-        #ViewGrantField {
+        .viewGrantField {
             margin-left: auto;
             margin-right: auto;
         }
@@ -16,13 +16,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
     <h1>View Grant</h1>
-    <div id="ViewGrantField" class="standardText">
+    <div class="viewGrantField">
         <asp:GridView ID="GridView1" runat="server" AllowPaging="True"
             AutoGenerateColumns="False" DataKeyNames="student_ID,Refno"
             DataSourceID="SqlDataSource1"
             EmptyDataText="There are no data records to display." BackColor="White"
             BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" CellPadding="4"
-            ForeColor="Black" GridLines="Horizontal">
+            ForeColor="Black" GridLines="Horizontal" CssClass="viewGrantField">
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
@@ -57,7 +57,7 @@
             <SortedDescendingHeaderStyle BackColor="#242121" />
         </asp:GridView>
 
-        <br/>
+        <br />
 
         <asp:Button ID="btnGrant" runat="server" OnClick="btnGrant_Click"
             Text="Add Grant" CssClass="standardButton" />

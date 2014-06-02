@@ -20,7 +20,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
         Response.Cache.SetCacheability(HttpCacheability.NoCache);
         Response.Cache.SetNoStore();
 
-        if (!Request.Url.AbsoluteUri.Contains("Login_Page.aspx"))// need this check in order to stop the page from crashing as the Login session won't have been set yet
+        if (!Request.Url.AbsoluteUri.Contains("Login_Page.aspx") && !Request.Url.AbsoluteUri.Contains("Forgotpasword.aspx"))// need this check in order to stop the page from crashing as the Login session won't have been set yet
         {
             lblAdmin.Text = UserIsAdmin() ? "Current user is an administrator" : "Current user is not an administrator";
         }
@@ -76,6 +76,5 @@ public partial class MasterPage : System.Web.UI.MasterPage
         }
 
         return adminValue;
-
     }
 }

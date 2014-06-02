@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="GrantSummary.aspx" title="Home"  description="">
+    <siteMapNode url="SearchStudent.aspx" title="Search Sudents"  description="">
+      <siteMapNode url="AddStudent.aspx" title="Add Student"/>
+      <siteMapNode url="Display_Info.aspx" title="All Student Search"/>
+    </siteMapNode>
+    <siteMapNode url="AddGrant.aspx" title="Add Grant"  description="" />
+    <siteMapNode url="AddUser.aspx" title="User Admin"  description="" />
+    <siteMapNode url="CMS.aspx" title="Content Management"  description="" />
+    <siteMapNode url="Sitemap.aspx" title="Sitemap"  description="" />
+  </siteMapNode>
+</siteMap>

@@ -38,13 +38,7 @@ public partial class MonthlyGrantSummary : System.Web.UI.Page
                 {
                     lblMsg.Text = "Total Amount Spent for " + dr["TotalGrants"] + " grants on " + dr["TotalStudents"] + " students for the month is $ " + dr["TotalGrantSum"];
                     lblMsgfunds.Text = "Amount spend from  Funds= $ " + dr["Funds"];
-                    lblMsgKohafunds.Text = "Amount spend from Koha Funds= $ " + dr["KohaFunds"];
-                    TitleTxt.Text = " Monthly Summary Report on all Vouchers, Harships and Advices for the month of " + dr["Monthname"] + " in Year " + txbReadYear.Text;
-                 
-                }
-                else
-                {
-                    TitleTxt.Visible = false;
+                    lblMsgKohafunds.Text = "Amount spend from Koha Funds= $ " + dr["KohaFunds"];                 
                 }
             }
         }
